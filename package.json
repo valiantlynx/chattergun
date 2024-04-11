@@ -1,0 +1,34 @@
+{
+	"name": "chattergun",
+	"version": "0.0.1",
+	"description": "ChatterGun: Unleash the power of decentralized, real-time chat in any project. A plug-and-play chat solution that brings secure and scalable messaging to websites and applications alike, powered by GunDB.",
+	"main": "index.js",
+	"license": "MIT",
+	"repository": {
+	  "type": "git",
+	  "url": "https://github.com/valiantlynx/chattergun.git"
+	},
+	"author": "valiantlynx <valiantlynxz@gmail.com> (https://www.valiantlynx.com/)",
+	"keywords": [
+	  "webcomponents",
+	  "gundb",
+	  "real-time",
+	  "chat",
+	  "decentralized"
+	],
+	"files": [
+	  "src"
+	],
+	"dependencies": {
+	  "gun": "^0.2020.520"
+	},
+	"publishConfig": {
+	  "registry": "https://registry.npmjs.org/",
+	  "access": "public"
+	},
+	"homepage": "https://chattergun.valiantlynx.com",
+	"bugs": {
+	  "url": "https://github.com/valiantlynx/chattergun/issues"
+	}
+  }
+  
