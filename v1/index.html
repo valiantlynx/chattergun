@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/app.js" type="module"></script>
+    <script src="./js/bigbang.js" type="module"></script>
+    <title>Gun Chat</title>
+    <link rel="preload" href="./css/chat.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Basic Web Components</h1>
+    </header>
+    <main>
+      <h2>Main Area</h2>
+      <h3>Web Component Below</h3>
+      <big-bang name="gero">
+        <h2 slot="title" style="color: rgb(146, 240, 16);">Characters</h2>
+        <ul slot="list" style="color: aqua;">
+          <li>Leonard</li>
+          <li>Sheldon</li>
+          <li>Raj</li>
+          <li>Howard</li>
+        </ul>
+      </big-bang>
+      
+    
+      <div id="chat-form" style="display: none;">
+        <h1>Gun Chat</h1>
+        <div id="chat"></div>
+        <form>
+          <input type="text" id="chat-input" placeholder="Type your message...">
+          <input type="file" id="image-input" multiple>
+          <input class="dark-mode button is-success" type="button" id="send-button" value="Send">
+        </form>
+        <button class="dark-mode button" id="logout-button">Log Out</button>
+        <button class="dark-mode button" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    
+        <button onclick="deleteAllMessages()">Delete all messages</button>
+      </div>
+    
+
+      <gun-chat></gun-chat>
+
+      <script>
+        function toggleDarkMode() {
+          var element = document.body;
+          element.classList.toggle("dark-mode");
+        }
+      </script>
+      
+      <script src="./js/gun-chat-component.js" type="module"></script>
+      <script src="./gun/sea.js"></script>
+      <script src="../gun/gun.js"></script>
+      <!-- <iframe src="http://gun-chat.valiantlynx.com" width="100%" height="800"></iframe> -->
+    </main>
+  </body>
+</html>

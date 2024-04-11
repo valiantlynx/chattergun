@@ -1,0 +1,48 @@
+/* Paste this into chat/src/components/login-form/loginForm.css */
+#login-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#login-form input[type="text"],
+#login-form input[type="password"],
+#login-form input[type="submit"],
+#login-form input[type="button"] {
+  margin-bottom: 10px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%;
+}
+
+#login-form input[type="submit"],
+#login-form input[type="button"] {
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+#login-form input[type="submit"]:hover,
+#login-form input[type="button"]:hover {
+  background-color: #45a049;
+}
+
+#login-form input[type="button"] {
+  background-color: #008CBA;
+}
+
+#login-form input[type="button"]:hover {
+  background-color: #007BBA;
+}

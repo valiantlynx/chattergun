@@ -1,0 +1,35 @@
+/* message.css */
+.message {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.username {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.time {
+  float: right;
+  color: #aaa;
+}
+
+.own-message {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.delete-button {
+  float: right;
+  background-color: #ff3939ce;
+  color: #ffffff;
+  margin: 0 5px;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1;
+}
