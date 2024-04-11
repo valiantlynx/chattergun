@@ -5,51 +5,57 @@
 	"main": "index.js",
 	"license": "MIT",
 	"repository": {
-	  "type": "git",
-	  "url": "https://github.com/valiantlynx/chattergun.git"
+		"type": "git",
+		"url": "https://github.com/valiantlynx/chattergun.git"
 	},
 	"author": "valiantlynx <valiantlynxz@gmail.com> (https://www.valiantlynx.com/)",
 	"keywords": [
-	  "webcomponents",
-	  "gundb",
-	  "real-time",
-	  "chat",
-	  "decentralized",
-	  "gun",
-	  "gunDB",
-	  "graph",
-	  "document",
-	  "key",
-	  "value",
-	  "relational",
-	  "datastore",
-	  "database",
-	  "engine",
-	  "realtime",
-	  "decentralized",
-	  "peer-to-peer",
-	  "distributed",
-	  "P2P",
-	  "OSS",
-	  "embedded",
-	  "localstorage",
-	  "S3"
+		"webcomponents",
+		"gundb",
+		"real-time",
+		"chat",
+		"decentralized",
+		"gun",
+		"gunDB",
+		"graph",
+		"document",
+		"key",
+		"value",
+		"relational",
+		"datastore",
+		"database",
+		"engine",
+		"realtime",
+		"decentralized",
+		"peer-to-peer",
+		"distributed",
+		"P2P",
+		"OSS",
+		"embedded",
+		"localstorage",
+		"S3"
 	],
 	"files": [
-	  "gun",
-	  "index.js",
-	  "style.css"
+		"gun",
+		"index.js",
+		"style.css"
 	],
+	"scripts": {
+		"ci:version": "pnpm changeset version",
+		"ci:publish": "pnpm publish -r"
+	},
+	"devDependencies": {
+		"@changesets/cli": "^2.27.1"
+	},
 	"dependencies": {
-	  "gun": "^0.2020.520"
+		"gun": "^0.2020.520"
 	},
 	"publishConfig": {
-	  "registry": "https://registry.npmjs.org/",
-	  "access": "public"
+		"registry": "https://registry.npmjs.org/",
+		"access": "public"
 	},
 	"homepage": "https://chattergun.valiantlynx.com",
 	"bugs": {
-	  "url": "https://github.com/valiantlynx/chattergun/issues"
+		"url": "https://github.com/valiantlynx/chattergun/issues"
 	}
-  }
-  
+}
