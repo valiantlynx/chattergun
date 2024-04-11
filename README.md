@@ -25,7 +25,7 @@ ChatterGun can be included directly from a CDN or installed via npm:
 Simply include the following `<script>` tag in your HTML to start using ChatterGun:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@valiantlynx/chattergun/dist/chattergun.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@valiantlynx/chattergun/index.js"></script>
 ```
 
 ### or NPM (comming soon, not tested)
