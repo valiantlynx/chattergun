@@ -21,7 +21,7 @@ on:
     - cron: '0 0 * * 0'
   workflow_dispatch:
   workflow_run:
-    workflows: ["gun-relay"]  # This triggers the deployment after ollama-docker workflow completes
+    workflows: ["chattergun-relay"]  # This triggers the deployment after ollama-docker workflow completes
     types:
       - completed
 
