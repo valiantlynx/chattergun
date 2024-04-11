@@ -7,18 +7,23 @@ on:
     branches:
       - 'main'
     paths:
-      - '**'
+      - 'chat/**'
+      - 'gun/**'
+      - '.github/workflows/chattergun.yaml'
   pull_request:
     branches:
       - 'main'
     paths:
-      - '**'
+      - 'chat/**'
+      - 'gun/**'
+      - '.github/workflows/chattergun.yaml'
   schedule:
     - cron: '0 0 * * 0'
   workflow_dispatch:
-  workflow_call:  # Added to allow this workflow to be called by other workflows
-concurrency: ${{ github.workflow }}-${{ github.ref }}
-
+  workflow_run:
+    workflows: ["gun-relay"]  # This triggers the deployment after ollama-docker workflow completes
+    types:
+      - completed
 
 jobs:
   build-and-push-images:
@@ -89,8 +94,7 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache
-        context: .
-        file: ./Dockerfile.solo
+        context: ./chat
 
     - name: Show image digest
       run: |
@@ -103,8 +107,7 @@ jobs:
         curl -X POST \
         -H "Authorization: token ${{ secrets.PAT }}" \
         -H "Accept: application/vnd.github+json" \
-        https://api.github.com/repos/valiantlynx/chattergun/dispatches \
+        https://api.github.com/repos/valiantlynx/svelte-rich-text/dispatches \
         -d '{"event_type": "image_pushed"}'
       env:
         PAT: ${{ secrets.PAT }}
-

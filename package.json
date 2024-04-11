@@ -14,10 +14,31 @@
 	  "gundb",
 	  "real-time",
 	  "chat",
-	  "decentralized"
+	  "decentralized",
+	  "gun",
+	  "gunDB",
+	  "graph",
+	  "document",
+	  "key",
+	  "value",
+	  "relational",
+	  "datastore",
+	  "database",
+	  "engine",
+	  "realtime",
+	  "decentralized",
+	  "peer-to-peer",
+	  "distributed",
+	  "P2P",
+	  "OSS",
+	  "embedded",
+	  "localstorage",
+	  "S3"
 	],
 	"files": [
-	  "src"
+	  "gun",
+	  "index.js",
+	  "style.css"
 	],
 	"dependencies": {
 	  "gun": "^0.2020.520"
