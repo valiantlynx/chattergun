@@ -1,6 +1,7 @@
 {
   "name": "relay",
   "version": "1.0.0",
+  "private": true,
   "description": "express server that creates a gundb relay",
   "main": "server.js",
   "scripts": {
