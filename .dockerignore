@@ -1,3 +1,5 @@
 node_modules
 /gun
 pnpm-lock.yaml
+.npmrc
+.pnpm-store/
