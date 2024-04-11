@@ -5,14 +5,14 @@ run-name: ${{ github.actor }} is building chattergun-relay image 📷
 on:
   push:
     branches:
-      - 'main'
+      - 'master'
     paths:
       - 'relay/**'
       - 'gun/**'
       - '.github/workflows/chattergun-relay.yaml'
   pull_request:
     branches:
-      - 'main'
+      - 'master'
     paths:
       - 'relay/**'
       - 'gun/**'

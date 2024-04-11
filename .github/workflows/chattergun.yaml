@@ -5,14 +5,14 @@ run-name: ${{ github.actor }} is building chattergun image 📷
 on:
   push:
     branches:
-      - 'main'
+      - 'master'
     paths:
       - 'chat/**'
       - 'gun/**'
       - '.github/workflows/chattergun.yaml'
   pull_request:
     branches:
-      - 'main'
+      - 'master'
     paths:
       - 'chat/**'
       - 'gun/**'
@@ -100,7 +100,7 @@ jobs:
       run: |
         echo ${{ steps.docker_build.outputs.digest }}
 
-    # Dispatch deployment event only if the workflow is successful and triggered on the main branch
+    # Dispatch deployment event only if the workflow is successful and triggered on the master branch
     - name: Dispatch Deployment Event
       if: github.event_name != 'pull_request' && success()
       run: |
