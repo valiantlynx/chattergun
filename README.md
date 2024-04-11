@@ -98,9 +98,9 @@ You can customize various aspects of the rich text editor:
   - `customParagraph` for paragraph blocks
   - `customQuote` for quote blocks
 
-git subtree add --prefix=gun https://github.com/amark/gun.git main --squash
-git subtree pull --prefix=gun https://github.com/amark/gun.git main --squash
-git subtree push --prefix=gun https://github.com/amark/gun.git main
+git subtree add --prefix=gun https://github.com/amark/gun.git master --squash
+git subtree pull --prefix=gun https://github.com/amark/gun.git master --squash
+git subtree push --prefix=gun https://github.com/amark/gun.git master
 
 ```ts
 export let customImage: ComponentType<
