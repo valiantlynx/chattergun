@@ -4,16 +4,22 @@ services:
   chattergun:
     container_name: chattergun
     build:
-      context: .
+      context: ./chat
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./chat/nginx.conf:/etc/nginx/nginx.conf
+      - ./gun:/var/www/html/gun
+    ports:
+      - 3000:3000
+    depends_on:
+      - chattergun-relay
+
+  chattergun-relay:
+    container_name: chattergun-relay
+    build:
+      context: ./relay
       dockerfile: Dockerfile
     restart: always
     ports:
-      - 3000:3000
-    networks:
-      - valiantlynx-turborepo
-
-# Define a network, which allows containers to communicate
-# with each other, by using their container name as a hostname
-networks:
-  valiantlynx-turborepo:
-    external: false
+      - 8765:8765
