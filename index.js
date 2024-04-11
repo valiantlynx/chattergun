@@ -1,8 +1,8 @@
 import stylesheet from './style.css' assert { type: 'css' };
 
 Promise.all([
-  import('https://cdn.jsdelivr.net/npm/gun/gun.js'),
-  import('https://cdn.jsdelivr.net/npm/gun/sea.js')
+  import('./gun/gun.js'),
+  import('./gun/sea.js')
 ]).then(() => {
   console.log('GunDB and SEA loaded successfully.');
   var gun = new Gun({
@@ -506,7 +506,7 @@ Promise.all([
     }
 
   }
-  customElements.define('chat-alt', ChatApp);
+  customElements.define('chatter-gun', ChatApp);
 
 }).catch(error => {
   console.error("Error loading GunDB/SEA or defining components:", error);
