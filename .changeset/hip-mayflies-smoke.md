@@ -1,0 +1,5 @@
+---
+"chattergun": patch
+---
+
+ai locally
