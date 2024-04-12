@@ -1,6 +1,6 @@
 {
 	"name": "chattergun",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "ChatterGun: Unleash the power of decentralized, real-time chat in any project. A plug-and-play chat solution that brings secure and scalable messaging to websites and applications alike, powered by GunDB.",
 	"main": "index.js",
 	"license": "MIT",
