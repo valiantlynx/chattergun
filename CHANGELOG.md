@@ -1,5 +1,13 @@
 # chattergun
 
+## 0.0.5
+
+### Patch Changes
+
+- 510ef84: alsmost introduced braking change
+- 16da719: the model answered me
+- f4e1c8c: im still learning how changesets work
+
 ## 0.0.4
 
 ### Patch Changes
