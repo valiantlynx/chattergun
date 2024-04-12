@@ -1,5 +1,11 @@
 # chattergun
 
+## 0.0.8
+
+### Patch Changes
+
+- ecc50c3: attempt fix gun not found error
+
 ## 0.0.7
 
 ### Patch Changes
