@@ -63,12 +63,12 @@ Promise.all([
         event.preventDefault();
         const username = document.getElementById('username-input').value.trim();
         const password = document.getElementById('password-input').value.trim();
-      
+
         if (username === '' || password === '') {
           alert('Please enter a username and password');
           return;
         }
-      
+
         this.loginUser(username, password);
       });
       this.shadowRoot.getElementById('delete-button').addEventListener('click', () => this.deleteAllMessages());
@@ -135,7 +135,7 @@ Promise.all([
               localStorage.setItem('currentUser', username);
               localStorage.setItem('currentPassword', password);
               this.gun.get('messages').map().once((data, key) => {
-             
+
                 this.addMessage(data);
                 this.shadowRoot.getElementById('chat').scrollTop = this.shadowRoot.getElementById('chat').scrollHeight;
               });
@@ -213,7 +213,7 @@ Promise.all([
       }
       const time = new Date().getTime();
       const id = Date.now().toString(36) + Math.floor(Math.pow(10, 12) + Math.random() * 9 * Math.pow(10, 12)).toString(36);
-      const data = { username: currentUser, message, time, id };
+      const data = { username: currentUser, message, time, id, processed: true };
 
       if (images.length > 0) {
         const reader = new FileReader();
@@ -285,9 +285,9 @@ Promise.all([
 
     }
 
-    addMessage(data) {
+    async addMessage(data) {
       try {
-        const { username, message, time, id, image } = data;
+        const { username, message, time, id, image, processed } = data;
         if (username && (message || image) && time) {
           const messageElement = document.createElement('div');
           const contentElement = document.createElement('div');
@@ -335,8 +335,11 @@ Promise.all([
           if (image) {
             contentElement.appendChild(imageElement);
           }
-          // Add this line to the addMessage function
-          if (username !== 'searchTerm') this.processMessage(message); // Process the incoming message and respond if necessary
+
+          // Process message only if it's from a user and hasn't been processed
+          if (!processed && username !== 'bot') {
+            await this.processMessage(message);
+          }
 
           this.shadowRoot.getElementById('chat').appendChild(messageElement);
           this.shadowRoot.getElementById('chat').scrollTop = this.shadowRoot.getElementById('chat').scrollHeight;
@@ -347,7 +350,8 @@ Promise.all([
 
     }
 
-    processMessage(message) {
+    async processMessage(message) {
+      console.log('processing')
       if (message.includes('@help')) {
         console.log('help');
         this.addsearchTermMessage('I can help with that! Here are some commands you can try:`\n-` @weather [city]: Get the current weather for a city\n- @news: Get the latest news headlines\n- @wiki [search term]: Search Wikipedia for an article');
@@ -355,11 +359,14 @@ Promise.all([
         this.weather(message);
       } else if (message.includes(`@news`)) {
         this.newsapi(message);
+
       } else if (message.includes('@wiki')) {
+        console.log('its ai')
         this.wikipedia(message);
       }
       else if (message.includes('@ai')) {
-        this.ai(message);
+        console.log('its ai')
+        await this.ai(message);
       }
     }
 
@@ -419,90 +426,59 @@ Promise.all([
     async ai(message) {
       console.log('ai');
       const searchTerm = message.split('@ai ')[1];
-      // addsearchTermMessage(`Hello! How can I assist you today?${searchTerm}`);
-      // async function generateText(searchTerm) {
-      //   const response = await fetch('http://localhost:5000/generate', {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json'
-      //     },
-      //     body: JSON.stringify({ input_text: searchTerm })
-      //   });
 
-      //   const data = await response.json();
-      //   return data.generated_text;
-      // }
 
-      async function generateText(searchTerm) {
-        let pyodide = await loadPyodide();
-        var data = {
-          'message': ['Hello', 'How are you?', 'Goodbye', 'Nice to meet you'],
-          'label': ['greeting', 'question', 'farewell', 'introduction']
+
+      async function generateText(promptText) {
+        const body = {
+          model: "mistral:7b",
+          prompt: promptText,
+          stream: false  // Set to false for single response
         }
 
-        await pyodide.loadPackage("micropip");
+        try {
 
-        const micropip = pyodide.pyimport("micropip");
-        await micropip.install("numpy")
-        await micropip.install(" scikit-learn")
-        await micropip.install("pandas")
-        console.log("Installed packages");
-        await pyodide.runPython(`
-          import pandas as pd
-    
-          from sklearn.feature_extraction.text import CountVectorizer
-          from sklearn.naive_bayes import MultinomialNB
-    
-          # Step 1: Collect chat data
-          df = pd.DataFrame(${JSON.stringify(data)})
-          print(df)
-    
-          # Step 2: Preprocess the data
-          vectorizer = CountVectorizer(stop_words='english')
-          X = vectorizer.fit_transform(df['message'])
-          y = df['label']
-    
-          # Step 3: Build the chatsearchTerm model
-          model = MultinomialNB()
-    
-          # Step 4: Train the model
-          model.fit(X, y)
-    
-          # Step 5: Test and refine the chatsearchTerm
-          message = "${searchTerm}"
-          X_test = vectorizer.transform([message])
-          prediction = model.predict(X_test)
-    
-          print(prediction)
-          
-    
-        `);
+          const response = await fetch("http://localhost:11434/api/chat", {
+            method: "POST",
+            body: JSON.stringify(body)
+          })
+            .catch(err => console.error(err));
 
+          console.log(response)
 
-        const prediction_string = pyodide.globals.get("prediction").toString();
-        const prediction_array = prediction_string.split("'"); // ['[', 'greeting', ']']
-        const prediction = prediction_array[1]; // greeting
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
 
-        console.log("prediction_string", prediction_string);
-        console.log("prediction_array", prediction_array);
-
-
-        return prediction;
-
+          const data = await response.json();
+          console.log(data)
+          return data.response;  // Use the response key to access the completion text
+        } catch (error) {
+          console.error('Failed to fetch AI completion:', error);
+          return 'Error fetching completion.';
+        }
       }
 
       // Example usage
-      const generatedText = await generateText(searchTerm);
+      const generatedText = await generateText(searchTerm).catch(err => console.error(err));
       this.addsearchTermMessage(generatedText);
       console.log("generatedText", generatedText);
 
     }
 
     addsearchTermMessage(message) {
+      if (message === '') {
+        return;
+      }
       const time = new Date().getTime();
-      const id = Date.now().toString(36) + Math.floor(Math.pow(10, 12) + Math.random() * 9 * Math.pow(10, 12)).toString(36)
-      const data = { username: 'bot', message, time, id };
+      const id = Date.now().toString(36) + Math.floor(Math.pow(10, 12) + Math.random() * 9 * Math.pow(10, 12)).toString(36);
+      const data = { username: 'bot', message, time, id, processed: true };
+
+
       this.gun.get('messages').set(data);
+
+      this.shadowRoot.getElementById('chat-input').value = '';
+      imageInput.value = '';
     }
 
   }
