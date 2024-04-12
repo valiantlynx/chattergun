@@ -1,5 +1,11 @@
 # chattergun
 
+## 0.0.7
+
+### Patch Changes
+
+- 72380f9: simplified it to not dynamicly import. but there is a risk it will error sometimes. just reload a buch of times
+
 ## 0.0.6
 
 ### Patch Changes
