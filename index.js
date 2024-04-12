@@ -479,4 +479,3 @@ Promise.all([
 }).catch(error => {
   console.error("Error loading GunDB/SEA or defining components:", error);
 });
-Package
