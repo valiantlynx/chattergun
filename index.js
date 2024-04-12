@@ -63,12 +63,12 @@ Promise.all([
         event.preventDefault();
         const username = document.getElementById('username-input').value.trim();
         const password = document.getElementById('password-input').value.trim();
-
+      
         if (username === '' || password === '') {
           alert('Please enter a username and password');
           return;
         }
-
+      
         this.loginUser(username, password);
       });
       this.shadowRoot.getElementById('delete-button').addEventListener('click', () => this.deleteAllMessages());
@@ -135,7 +135,7 @@ Promise.all([
               localStorage.setItem('currentUser', username);
               localStorage.setItem('currentPassword', password);
               this.gun.get('messages').map().once((data, key) => {
-
+             
                 this.addMessage(data);
                 this.shadowRoot.getElementById('chat').scrollTop = this.shadowRoot.getElementById('chat').scrollHeight;
               });
@@ -213,7 +213,7 @@ Promise.all([
       }
       const time = new Date().getTime();
       const id = Date.now().toString(36) + Math.floor(Math.pow(10, 12) + Math.random() * 9 * Math.pow(10, 12)).toString(36);
-      const data = { username: currentUser, message, time, id, processed: true };
+      const data = { username: currentUser, message, time, id };
 
       if (images.length > 0) {
         const reader = new FileReader();
@@ -285,9 +285,9 @@ Promise.all([
 
     }
 
-    async addMessage(data) {
+    addMessage(data) {
       try {
-        const { username, message, time, id, image, processed } = data;
+        const { username, message, time, id, image } = data;
         if (username && (message || image) && time) {
           const messageElement = document.createElement('div');
           const contentElement = document.createElement('div');
@@ -335,11 +335,8 @@ Promise.all([
           if (image) {
             contentElement.appendChild(imageElement);
           }
-
-          // Process message only if it's from a user and hasn't been processed
-          if (!processed && username !== 'bot') {
-            await this.processMessage(message);
-          }
+          // Add this line to the addMessage function
+          if (username !== 'searchTerm') this.processMessage(message); // Process the incoming message and respond if necessary
 
           this.shadowRoot.getElementById('chat').appendChild(messageElement);
           this.shadowRoot.getElementById('chat').scrollTop = this.shadowRoot.getElementById('chat').scrollHeight;
@@ -350,8 +347,7 @@ Promise.all([
 
     }
 
-    async processMessage(message) {
-      console.log('processing')
+    processMessage(message) {
       if (message.includes('@help')) {
         console.log('help');
         this.addsearchTermMessage('I can help with that! Here are some commands you can try:`\n-` @weather [city]: Get the current weather for a city\n- @news: Get the latest news headlines\n- @wiki [search term]: Search Wikipedia for an article');
@@ -359,14 +355,11 @@ Promise.all([
         this.weather(message);
       } else if (message.includes(`@news`)) {
         this.newsapi(message);
-
       } else if (message.includes('@wiki')) {
-        console.log('its ai')
         this.wikipedia(message);
       }
       else if (message.includes('@ai')) {
-        console.log('its ai')
-        await this.ai(message);
+        this.ai(message);
       }
     }
 
@@ -426,8 +419,19 @@ Promise.all([
     async ai(message) {
       console.log('ai');
       const searchTerm = message.split('@ai ')[1];
+      // addsearchTermMessage(`Hello! How can I assist you today?${searchTerm}`);
+      // async function generateText(searchTerm) {
+      //   const response = await fetch('http://localhost:5000/generate', {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json'
+      //     },
+      //     body: JSON.stringify({ input_text: searchTerm })
+      //   });
 
-
+      //   const data = await response.json();
+      //   return data.generated_text;
+      // }
 
       async function generateText(promptText) {
         const body = {
@@ -438,7 +442,7 @@ Promise.all([
 
         try {
 
-          const response = await fetch("http://localhost:11434/api/chat", {
+          const response = await fetch("http://localhost:11434/api/generate", {
             method: "POST",
             body: JSON.stringify(body)
           })
@@ -460,23 +464,24 @@ Promise.all([
       }
 
       // Example usage
-      const generatedText = await generateText(searchTerm).catch(err => console.error(err));
+      const generatedText = await generateText(searchTerm);
       this.addsearchTermMessage(generatedText);
       console.log("generatedText", generatedText);
 
     }
 
-    addsearchTermMessage(message) {
+    addsearchTermMessage(message, image) {
+
       if (message === '') {
         return;
       }
       const time = new Date().getTime();
       const id = Date.now().toString(36) + Math.floor(Math.pow(10, 12) + Math.random() * 9 * Math.pow(10, 12)).toString(36);
-      const data = { username: 'bot', message, time, id, processed: true };
+      const data = { username: 'bot', message, time, id };
 
-
-      this.gun.get('messages').set(data);
-
+  
+        this.gun.get('messages').set(data);
+  
       this.shadowRoot.getElementById('chat-input').value = '';
       imageInput.value = '';
     }
