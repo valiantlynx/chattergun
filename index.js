@@ -9,7 +9,8 @@ Promise.all([
     peers: [
       'https://gun-relay.valiantlynx.com/gun',
       'https://gun-relay1.valiantlynx.com/gun',
-      'https://gun-relay2.valiantlynx.com/gun'
+      'https://gun-relay2.valiantlynx.com/gun',
+      'https://chattergun-relay.valiantlynx.com/gun'
     ]
   });
 
