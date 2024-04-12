@@ -1,5 +1,12 @@
 # chattergun
 
+## 0.0.6
+
+### Patch Changes
+
+- 76b4769: fixed image input errors
+- 76b4769: ok done for today
+
 ## 0.0.5
 
 ### Patch Changes
