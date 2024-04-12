@@ -1,5 +1,11 @@
 # chattergun
 
+## 0.0.10
+
+### Patch Changes
+
+- 83642c5: Package
+
 ## 0.0.9
 
 ### Patch Changes
