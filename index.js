@@ -419,25 +419,13 @@ Promise.all([
     async ai(message) {
       console.log('ai');
       const searchTerm = message.split('@ai ')[1];
-      // addsearchTermMessage(`Hello! How can I assist you today?${searchTerm}`);
-      // async function generateText(searchTerm) {
-      //   const response = await fetch('http://localhost:5000/generate', {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json'
-      //     },
-      //     body: JSON.stringify({ input_text: searchTerm })
-      //   });
-
-      //   const data = await response.json();
-      //   return data.generated_text;
-      // }
 
       async function generateText(promptText) {
         const body = {
           model: "mistral:7b",
           prompt: promptText,
-          stream: false  // Set to false for single response
+          stream: false,
+          keep_alive: "30m"
         }
 
         try {
@@ -459,7 +447,7 @@ Promise.all([
           return data.response;  // Use the response key to access the completion text
         } catch (error) {
           console.error('Failed to fetch AI completion:', error);
-          return 'Error fetching completion.';
+          return '...';
         }
       }
 
@@ -470,7 +458,7 @@ Promise.all([
 
     }
 
-    addsearchTermMessage(message, image) {
+    addsearchTermMessage(message) {
 
       if (message === '') {
         return;
@@ -483,7 +471,6 @@ Promise.all([
         this.gun.get('messages').set(data);
   
       this.shadowRoot.getElementById('chat-input').value = '';
-      imageInput.value = '';
     }
 
   }
