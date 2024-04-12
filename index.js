@@ -1,14 +1,4 @@
 import stylesheet from './style.css' assert { type: 'css' };
-var gun = new Gun({
-  peers: [
-    'https://gun-relay.valiantlynx.com/gun',
-    'https://gun-relay1.valiantlynx.com/gun',
-    'https://gun-relay2.valiantlynx.com/gun',
-    'https://chattergun-relay.valiantlynx.com/gun'
-  ]
-});
-
-var currentUser;
 
 class ChatApp extends HTMLElement {
   constructor() {
@@ -18,6 +8,7 @@ class ChatApp extends HTMLElement {
     this.shadowRoot.innerHTML = `
         <script type="module" src="./gun/gun.js"></script>
         <script type="module" src="./gun/sea.js"></script>
+        
         <div class="dark-mode" id="login-form">
           <h1>Gun Chat</h1>
           <form>
@@ -41,11 +32,21 @@ class ChatApp extends HTMLElement {
         </div>
       `;
 
-    this.gun = gun;
+      this.gun = new Gun({
+        peers: [
+          'https://gun-relay.valiantlynx.com/gun',
+          'https://gun-relay1.valiantlynx.com/gun',
+          'https://gun-relay2.valiantlynx.com/gun',
+          'https://chattergun-relay.valiantlynx.com/gun'
+        ]
+      });
+    
     this.user = this.gun.user();
+    this.currentUser = this.gun.user().is.alias
 
     this.gun.on('auth', () => {
       const user = this.gun.user();
+
       if (user.is) {
         this.setCurrentUser(user.is.alias);
         this.shadowRoot.getElementById('login-form').style.display = 'none';
@@ -84,7 +85,7 @@ class ChatApp extends HTMLElement {
   }
 
   setCurrentUser(user) {
-    currentUser = user;
+    this.currentUser = user;
   }
 
   registerUser(event) {
