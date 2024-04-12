@@ -1,5 +1,11 @@
 # chattergun
 
+## 0.0.9
+
+### Patch Changes
+
+- 08ff798: back to v6 mostly
+
 ## 0.0.8
 
 ### Patch Changes
