@@ -10,7 +10,8 @@ Promise.all([
       'https://gun-relay.valiantlynx.com/gun',
       'https://gun-relay1.valiantlynx.com/gun',
       'https://gun-relay2.valiantlynx.com/gun',
-      'https://chattergun-relay.valiantlynx.com/gun'
+      'https://chattergun-relay.valiantlynx.com/gun',
+      'http://localhost:8765/gun'
     ]
   });
 
@@ -447,7 +448,7 @@ Promise.all([
           return data.response;  // Use the response key to access the completion text
         } catch (error) {
           console.error('Failed to fetch AI completion:', error);
-          return '...';
+          return '';
         }
       }
 

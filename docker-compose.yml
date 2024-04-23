@@ -10,8 +10,10 @@ services:
     volumes:
       - ./chat/nginx.conf:/etc/nginx/nginx.conf
       - ./gun:/var/www/html/gun
+      - ./index.js:/var/www/html/index.js
+      - ./chat/index.html:/var/www/html/index.html
     ports:
-      - 3000:3000
+      - 3300:3000
     depends_on:
       - chattergun-relay
 
