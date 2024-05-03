@@ -12,6 +12,7 @@ services:
       - ./gun:/var/www/html/gun
       - ./index.js:/var/www/html/index.js
       - ./chat/index.html:/var/www/html/index.html
+      - ./chat/style.css:/var/www/html/style.css
     ports:
       - 3300:3000
     depends_on:
