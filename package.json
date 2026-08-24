@@ -45,7 +45,7 @@
 		"ci:publish": "pnpm publish -r"
 	},
 	"devDependencies": {
-		"@changesets/cli": "^2.27.1"
+		"@changesets/cli": "^3.0.1"
 	},
 	"dependencies": {
 		"gun": "^0.2020.520"
